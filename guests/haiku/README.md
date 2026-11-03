@@ -22,7 +22,7 @@ https://download.haiku-os.org/
 
 ## Access
 
-- noVNC: http://127.0.0.1:6011/vnc.html
+- noVNC: http://127.0.0.1:6111/vnc.html
 - VNC: `127.0.0.1:5911`
 - SSH forward `2211` is published for a later sshd setup on the guest
   (`user` is Haiku's default account)
