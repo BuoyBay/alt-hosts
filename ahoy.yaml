@@ -1,0 +1,16 @@
+# Project build and developer actions; personal overrides belong in ahoy.local.yaml.
+{
+  "schema": 1,
+  "build": {
+    "kind": "task",
+    "task": "check"
+  },
+  "tasks": {
+    "check": {
+      "argv": [
+        "scripts/check.sh"
+      ],
+      "timeout": 120
+    }
+  }
+}

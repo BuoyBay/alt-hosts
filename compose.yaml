@@ -1,0 +1,45 @@
+name: alt-hosts
+
+services:
+  macos9:
+    build:
+      context: .
+      dockerfile: guests/Dockerfile
+    image: buoybay/alt-hosts:0.1.0
+    command: ["macos9"]
+    ports:
+      - "127.0.0.1:5901:5900"
+      - "127.0.0.1:6081:6080"
+    volumes:
+      - ${MEDIA_DIR:-./media}:/media
+    environment:
+      MACOS9_DISK: ${MACOS9_DISK:-macos9.qcow2}
+      MACOS9_CDROM: ${MACOS9_CDROM:-macos-922-uni.iso}
+      MACOS9_BOOT: ${MACOS9_BOOT:-c}
+      MACOS9_MEM: ${MACOS9_MEM:-512}
+      MACOS9_CPU: ${MACOS9_CPU:-7400_v2.9}
+      MACOS9_MACHINE: ${MACOS9_MACHINE:-mac99,via=pmu}
+      DISPLAY_RES: ${DISPLAY_RES:-1024x768x32}
+    stop_grace_period: 20s
+
+  haiku:
+    build:
+      context: .
+      dockerfile: guests/Dockerfile
+    image: buoybay/alt-hosts:0.1.0
+    command: ["haiku"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5900:5900"
+      - "127.0.0.1:6080:6080"
+      - "127.0.0.1:2222:2222"
+    volumes:
+      - ${MEDIA_DIR:-./media}:/media
+    environment:
+      HAIKU_DISK: ${HAIKU_DISK:-haiku-r1beta6-x86_64.qcow2}
+      HAIKU_CDROM: ${HAIKU_CDROM:-}
+      HAIKU_MEM: ${HAIKU_MEM:-2048}
+      HAIKU_SMP: ${HAIKU_SMP:-2}
+      HAIKU_SSH_PORT: "2222"
+    stop_grace_period: 20s
