@@ -55,8 +55,13 @@ case "$guest" in
         /usr/local/bin/qemu-haiku "$@" &
         qemu_pid=$!
         ;;
+    win95|win98|winme|winnt4|win2000|winxp|winvista|win7|win81|win10)
+        export GUEST_NAME="${GUEST_NAME:-$guest}"
+        /usr/local/bin/qemu-windows "$@" &
+        qemu_pid=$!
+        ;;
     *)
-        echo "unknown guest: $guest (macos9|macos921|macos91|macos904|macosx106|macosx105|macosx104|macosx103|macosx102|macosx101|macosx100|macos76|macos75|macos6|macos5|macos4|macos3|macos2|macos1|haiku)" >&2
+        echo "unknown guest: $guest (macos9|macos921|macos91|macos904|macosx106|macosx105|macosx104|macosx103|macosx102|macosx101|macosx100|macos76|macos75|macos6|macos5|macos4|macos3|macos2|macos1|win95|win98|winme|winnt4|win2000|winxp|winvista|win7|win81|win10|haiku)" >&2
         exit 2
         ;;
 esac

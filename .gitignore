@@ -13,7 +13,7 @@ buoy-llms.txt
 .buoy/
 .bpm/
 
-# Operator-supplied guest media. Never commit Apple or Haiku disk images.
+# Operator-supplied guest media. Never commit Apple, Microsoft, or Haiku disks.
 /media/*
 !/media/.gitkeep
 !/media/README.md

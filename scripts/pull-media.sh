@@ -22,6 +22,7 @@ utm921="$downloads/Mac OS 9.2.1.utm/Images/disk-0.qcow2"
 
 echo "pulling Mac OS 9.x, Quadra/Plus/128K ROMs, System 6.0.8, and Haiku disks from $host into $dest" >&2
 echo "Mac OS X installer ISOs are not on Depot; copy QemuMac iso/ or operator 10.6 media if present" >&2
+echo "Windows 95–10 ISOs are not on Depot; place win95.iso … win10.iso in media/" >&2
 
 rsync -aP --info=progress2 \
     "$host:$os9_src/macos-922-uni.iso" \

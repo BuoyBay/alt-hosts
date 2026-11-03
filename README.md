@@ -1,10 +1,11 @@
-# QEMU and Mini vMac guests for Haiku, Classic Mac OS, and Mac OS X
+# QEMU and Mini vMac guests for Haiku, Classic Mac OS, Mac OS X, and Windows
 
 Docker-wrapped QEMU guests used as build and test hosts for alternative
 operating systems. Guests are Mac OS 9.2.2 through 9.0.4 (PowerPC),
 Mac OS X 10.6 Snow Leopard (Intel), 10.5.6 / 10.4 (PowerPC G4), 10.3–10.0
 (PowerPC), Mac OS 7.6.1 / 7.5.3 (68k Quadra 800), Macintosh System 6.0.8
-through 1.0 (Mini vMac Plus / 128K), and Haiku R1/beta6 (x86_64).
+through 1.0 (Mini vMac Plus / 128K), Windows 95 through 10, and Haiku
+R1/beta6 (x86_64).
 
 ## Guests
 
@@ -29,6 +30,16 @@ through 1.0 (Mini vMac Plus / 128K), and Haiku R1/beta6 (x86_64).
 | `macos3` | Mini vMac Plus | `vMac.ROM` + `macos3.dsk` | VNC `5913`, noVNC `6113` |
 | `macos2` | Mini vMac Plus | `vMac.ROM` + `macos2.dsk` | VNC `5912`, noVNC `6112` |
 | `macos1` | Mini vMac 128K | `Mac128K.ROM` + `macos1.dsk` | VNC `5910`, noVNC `6110` |
+| `win95` | `qemu-system-i386` pentium TCG | `win95.qcow2` + `win95.iso` | VNC `5930`, noVNC `6130` |
+| `win98` | `qemu-system-i386` pentium2 TCG | `win98.qcow2` + `win98.iso` | VNC `5931`, noVNC `6131` |
+| `winme` | `qemu-system-i386` pentium3 TCG | `winme.qcow2` + `winme.iso` | VNC `5932`, noVNC `6132` |
+| `winnt4` | `qemu-system-i386` pentium TCG | `winnt4.qcow2` + `winnt4.iso` | VNC `5933`, noVNC `6133` |
+| `win2000` | `qemu-system-i386` qemu32 KVM | `win2000.qcow2` + `win2000.iso` | VNC `5934`, noVNC `6134` |
+| `winxp` | `qemu-system-x86_64` qemu64 KVM | `winxp.qcow2` + `winxp.iso` | VNC `5935`, noVNC `6135` |
+| `winvista` | `qemu-system-x86_64` host KVM | `winvista.qcow2` + `winvista.iso` | VNC `5936`, noVNC `6136` |
+| `win7` | `qemu-system-x86_64` host KVM | `win7.qcow2` + `win7.iso` | VNC `5937`, noVNC `6137` |
+| `win81` | `qemu-system-x86_64` host KVM | `win81.qcow2` + `win81.iso` | VNC `5938`, noVNC `6138` |
+| `win10` | `qemu-system-x86_64` host KVM | `win10.qcow2` + `win10.iso` | VNC `5939`, noVNC `6139` |
 | `haiku` | `qemu-system-x86_64` | `haiku-r1beta6-x86_64.qcow2` | VNC `5911`, noVNC `6111` |
 
 Classic Mac and PowerPC OS X flags follow [QemuMac](https://github.com/matthewdeaves/QemuMac)
@@ -46,8 +57,11 @@ System 1–6 cannot use Quadra 800 QEMU; they run on Mini vMac (Plus / 128K)
 compiled into the image. Mac OS 8.1 is the last 68k System and reuses the
 Quadra 800 launcher once an installer is in `media/`. 8.0–8.6 do not run on
 `qemu-system-ppc`. Intel 10.7–10.12 (LegacyOSXKVM) and 10.13+ (kholia/OSX-KVM
-/ DarwinKVM) are later guests. See [docs/macosx.md](docs/macosx.md) and
-[docs/macos-system.md](docs/macos-system.md).
+/ DarwinKVM) are later guests. Windows 95–10 share `qemu-windows.sh`;
+Microsoft ISOs stay operator-supplied. Windows 11 (TPM 2.0) is a later
+guest. See [docs/macosx.md](docs/macosx.md),
+[docs/macos-system.md](docs/macos-system.md), and
+[docs/windows.md](docs/windows.md).
 
 ## Media
 
@@ -70,8 +84,8 @@ From this Linux host:
 That rsyncs the 9.x disks/ISOs, extracts `800.ROM` / Plus / 128K ROMs,
 downloads Apple System 6.0.8 freeware, rebases the Haiku overlay, and
 copies OpenCore from `local/LegacyOSXKVM` when a clone is present. 7.5/7.6,
-System 1–5 disks, and Apple OS X installer ISOs are operator-supplied.
-See [docs/media.md](docs/media.md).
+System 1–5 disks, Apple OS X installer ISOs, and Windows 95–10 ISOs are
+operator-supplied. See [docs/media.md](docs/media.md).
 
 ## Run
 
@@ -85,6 +99,7 @@ See [docs/media.md](docs/media.md).
 ./scripts/alt-hosts.sh up macosx105
 ./scripts/alt-hosts.sh up macosx104
 ./scripts/alt-hosts.sh up macos6
+./scripts/alt-hosts.sh up win95
 ./scripts/alt-hosts.sh up haiku
 ./scripts/alt-hosts.sh status
 ```
@@ -103,13 +118,16 @@ noVNC:
 - Mac OS 7.5.3: http://127.0.0.1:6095/vnc.html
 - System 6.0.8: http://127.0.0.1:6116/vnc.html
 - System 1.0: http://127.0.0.1:6110/vnc.html
+- Windows 95: http://127.0.0.1:6130/vnc.html
+- Windows 98–10: http://127.0.0.1:6131/vnc.html through `6139`
 - Haiku: http://127.0.0.1:6111/vnc.html
 
 Raw VNC is on `127.0.0.1:5909` (9.2.2) through `5901`–`5908`, `5916`–`5912`
-and `5910` (System 6–1), `5920`–`5923` (10.0–10.3), and `5911` (Haiku). Host
-ports avoid 6081, 2222 and 6010–6019 already used by other stacks on this
-workstation. OS X SSH is `2214` (Tiger), `2215` (Leopard), and `2216`
-(Snow Leopard).
+and `5910` (System 6–1), `5920`–`5923` (10.0–10.3), `5930`–`5939` (Windows
+95–10), and `5911` (Haiku). Host ports avoid 6081, 2222 and 6010–6019
+already used by other stacks on this workstation. OS X SSH is `2214`
+(Tiger), `2215` (Leopard), and `2216` (Snow Leopard). Windows XP–10 RDP is
+`3335`–`3339`.
 
 On macOS, QemuMac remains the native launcher (`local/QemuMac` after
 `./scripts/bootstrap-qemumac.sh`). Intel 10.6 OpenCore comes from
@@ -126,6 +144,7 @@ guests/macos9/          9.2.2 wrapper (MACOS9_* env)
 guests/macosx-intel/    Snow Leopard 10.6 OpenCore launcher
 guests/macosx/          PPC OS X notes
 guests/minivmac/        System 1–6 Mini vMac launcher
+guests/windows/         Windows 95–10 shared qemu-system-x86 launcher
 guests/haiku/           Haiku R1/beta6 launcher
 guests/macos75/         7.5.3 notes
 scripts/                check, pull-media, QemuMac / LegacyOSXKVM bootstrap

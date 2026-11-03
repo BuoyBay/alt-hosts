@@ -105,6 +105,27 @@ with a dedicated disk/ISO when one is available. 8.0–8.6 do not run on
 
 SheepShaver `classic.dmg` on Depot is a PPC SheepShaver disk, not a q800 image.
 
+## Windows 95–10 (Microsoft)
+
+Microsoft installers are copyrighted. Keep them on the operator's machine.
+Depot has none. `pull-media.sh` does not fetch Windows ISOs.
+
+| File | What |
+| --- | --- |
+| `win95.iso` / `win95.img` | 95 CD and optional boot floppy |
+| `win98.iso` | 98 SE |
+| `winme.iso` | Me |
+| `winnt4.iso` | NT 4.0 |
+| `win2000.iso` | 2000 |
+| `winxp.iso` | XP |
+| `winvista.iso` | Vista |
+| `win7.iso` | 7 |
+| `win81.iso` | 8.1 |
+| `win10.iso` | 10 |
+
+Empty `win95.qcow2` … `win10.qcow2` are created on first boot. See
+[windows.md](windows.md).
+
 ## Haiku (open source)
 
 Official images: https://www.haiku-os.org/get-haiku/ and

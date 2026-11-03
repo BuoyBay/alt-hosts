@@ -17,7 +17,8 @@ for script in \
     guests/haiku/qemu-haiku.sh \
     guests/macosx-intel/qemu-macosx-intel.sh \
     guests/minivmac/minivmac-macos.sh \
-    guests/minivmac/build.sh
+    guests/minivmac/build.sh \
+    guests/windows/qemu-windows.sh
 do
     if ! sh -n "$script"; then
         echo "syntax: $script" >&2

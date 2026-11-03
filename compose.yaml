@@ -4,7 +4,7 @@ x-alt-hosts: &alt-hosts
   build:
     context: .
     dockerfile: guests/Dockerfile
-  image: buoybay/alt-hosts:0.5.0
+  image: buoybay/alt-hosts:0.6.0
   volumes:
     - ${MEDIA_DIR:-./media}:/media
   stop_grace_period: 20s
@@ -308,6 +308,251 @@ services:
       MACOS_MVM_MODEL: 128k
       MACOS_ROM: ${MACOS1_ROM:-Mac128K.ROM}
       MACOS_DISK: ${MACOS1_DISK:-macos1.dsk}
+
+  win95:
+    <<: *alt-hosts
+    command: ["win95"]
+    ports:
+      - "127.0.0.1:5930:5900"
+      - "127.0.0.1:6130:6080"
+    environment:
+      GUEST_NAME: win95
+      WIN_QEMU: qemu-system-i386
+      WIN_CPU: pentium
+      WIN_MACHINE: pc,acpi=off
+      WIN_ACCEL: tcg
+      WIN_MEM: ${WIN95_MEM:-64}
+      WIN_VGA: cirrus
+      WIN_NIC: ne2k_isa
+      WIN_SOUND: sb16
+      WIN_DISK: ${WIN95_DISK:-win95.qcow2}
+      WIN_CDROM: ${WIN95_CDROM:-win95.iso}
+      WIN_FLOPPY: ${WIN95_FLOPPY:-win95.img}
+      WIN_DISK_SIZE: ${WIN95_DISK_SIZE:-2G}
+      WIN_MAC: "52:54:00:12:95:01"
+
+  win98:
+    <<: *alt-hosts
+    command: ["win98"]
+    ports:
+      - "127.0.0.1:5931:5900"
+      - "127.0.0.1:6131:6080"
+    environment:
+      GUEST_NAME: win98
+      WIN_QEMU: qemu-system-i386
+      WIN_CPU: pentium2
+      WIN_MACHINE: pc
+      WIN_ACCEL: tcg
+      WIN_MEM: ${WIN98_MEM:-256}
+      WIN_VGA: cirrus
+      WIN_NIC: pcnet
+      WIN_SOUND: ac97
+      WIN_DISK: ${WIN98_DISK:-win98.qcow2}
+      WIN_CDROM: ${WIN98_CDROM:-win98.iso}
+      WIN_DISK_SIZE: ${WIN98_DISK_SIZE:-4G}
+      WIN_MAC: "52:54:00:12:98:01"
+
+  winme:
+    <<: *alt-hosts
+    command: ["winme"]
+    ports:
+      - "127.0.0.1:5932:5900"
+      - "127.0.0.1:6132:6080"
+    environment:
+      GUEST_NAME: winme
+      WIN_QEMU: qemu-system-i386
+      WIN_CPU: pentium3
+      WIN_MACHINE: pc
+      WIN_ACCEL: tcg
+      WIN_MEM: ${WINME_MEM:-256}
+      WIN_VGA: cirrus
+      WIN_NIC: pcnet
+      WIN_SOUND: ac97
+      WIN_DISK: ${WINME_DISK:-winme.qcow2}
+      WIN_CDROM: ${WINME_CDROM:-winme.iso}
+      WIN_DISK_SIZE: ${WINME_DISK_SIZE:-4G}
+      WIN_MAC: "52:54:00:12:00:01"
+
+  winnt4:
+    <<: *alt-hosts
+    command: ["winnt4"]
+    ports:
+      - "127.0.0.1:5933:5900"
+      - "127.0.0.1:6133:6080"
+    environment:
+      GUEST_NAME: winnt4
+      WIN_QEMU: qemu-system-i386
+      WIN_CPU: pentium
+      WIN_MACHINE: pc,acpi=off
+      WIN_ACCEL: tcg
+      WIN_MEM: ${WINNT4_MEM:-128}
+      WIN_VGA: cirrus
+      WIN_NIC: pcnet
+      WIN_SOUND: sb16
+      WIN_DISK: ${WINNT4_DISK:-winnt4.qcow2}
+      WIN_CDROM: ${WINNT4_CDROM:-winnt4.iso}
+      WIN_DISK_SIZE: ${WINNT4_DISK_SIZE:-4G}
+      WIN_MAC: "52:54:00:12:04:01"
+
+  win2000:
+    <<: *alt-hosts
+    command: ["win2000"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5934:5900"
+      - "127.0.0.1:6134:6080"
+    environment:
+      GUEST_NAME: win2000
+      WIN_QEMU: qemu-system-i386
+      WIN_CPU: qemu32
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WIN2000_MEM:-384}
+      WIN_SMP: ${WIN2000_SMP:-1}
+      WIN_VGA: cirrus
+      WIN_NIC: rtl8139
+      WIN_SOUND: sb16
+      WIN_TABLET: "1"
+      WIN_DISK: ${WIN2000_DISK:-win2000.qcow2}
+      WIN_CDROM: ${WIN2000_CDROM:-win2000.iso}
+      WIN_DISK_SIZE: ${WIN2000_DISK_SIZE:-8G}
+      WIN_MAC: "52:54:00:12:00:02"
+
+  winxp:
+    <<: *alt-hosts
+    command: ["winxp"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5935:5900"
+      - "127.0.0.1:6135:6080"
+      - "127.0.0.1:3335:3389"
+    environment:
+      GUEST_NAME: winxp
+      WIN_QEMU: qemu-system-x86_64
+      WIN_CPU: qemu64
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WINXP_MEM:-512}
+      WIN_SMP: ${WINXP_SMP:-1}
+      WIN_VGA: cirrus
+      WIN_NIC: rtl8139
+      WIN_SOUND: ac97
+      WIN_TABLET: "1"
+      WIN_RDP_PORT: "3389"
+      WIN_DISK: ${WINXP_DISK:-winxp.qcow2}
+      WIN_CDROM: ${WINXP_CDROM:-winxp.iso}
+      WIN_DISK_SIZE: ${WINXP_DISK_SIZE:-16G}
+      WIN_MAC: "52:54:00:12:05:01"
+
+  winvista:
+    <<: *alt-hosts
+    command: ["winvista"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5936:5900"
+      - "127.0.0.1:6136:6080"
+      - "127.0.0.1:3336:3389"
+    environment:
+      GUEST_NAME: winvista
+      WIN_QEMU: qemu-system-x86_64
+      WIN_CPU: host
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WINVISTA_MEM:-1024}
+      WIN_SMP: ${WINVISTA_SMP:-2}
+      WIN_VGA: std
+      WIN_NIC: e1000
+      WIN_SOUND: ac97
+      WIN_TABLET: "1"
+      WIN_RDP_PORT: "3389"
+      WIN_DISK: ${WINVISTA_DISK:-winvista.qcow2}
+      WIN_CDROM: ${WINVISTA_CDROM:-winvista.iso}
+      WIN_DISK_SIZE: ${WINVISTA_DISK_SIZE:-32G}
+      WIN_MAC: "52:54:00:12:06:01"
+
+  win7:
+    <<: *alt-hosts
+    command: ["win7"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5937:5900"
+      - "127.0.0.1:6137:6080"
+      - "127.0.0.1:3337:3389"
+    environment:
+      GUEST_NAME: win7
+      WIN_QEMU: qemu-system-x86_64
+      WIN_CPU: host
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WIN7_MEM:-2048}
+      WIN_SMP: ${WIN7_SMP:-2}
+      WIN_VGA: std
+      WIN_NIC: e1000
+      WIN_SOUND: ac97
+      WIN_TABLET: "1"
+      WIN_RDP_PORT: "3389"
+      WIN_DISK: ${WIN7_DISK:-win7.qcow2}
+      WIN_CDROM: ${WIN7_CDROM:-win7.iso}
+      WIN_DISK_SIZE: ${WIN7_DISK_SIZE:-32G}
+      WIN_MAC: "52:54:00:12:07:01"
+
+  win81:
+    <<: *alt-hosts
+    command: ["win81"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5938:5900"
+      - "127.0.0.1:6138:6080"
+      - "127.0.0.1:3338:3389"
+    environment:
+      GUEST_NAME: win81
+      WIN_QEMU: qemu-system-x86_64
+      WIN_CPU: host
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WIN81_MEM:-2048}
+      WIN_SMP: ${WIN81_SMP:-2}
+      WIN_VGA: std
+      WIN_NIC: e1000
+      WIN_SOUND: hda
+      WIN_TABLET: "1"
+      WIN_RDP_PORT: "3389"
+      WIN_DISK: ${WIN81_DISK:-win81.qcow2}
+      WIN_CDROM: ${WIN81_CDROM:-win81.iso}
+      WIN_DISK_SIZE: ${WIN81_DISK_SIZE:-40G}
+      WIN_MAC: "52:54:00:12:08:01"
+
+  win10:
+    <<: *alt-hosts
+    command: ["win10"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5939:5900"
+      - "127.0.0.1:6139:6080"
+      - "127.0.0.1:3339:3389"
+    environment:
+      GUEST_NAME: win10
+      WIN_QEMU: qemu-system-x86_64
+      WIN_CPU: host
+      WIN_MACHINE: pc
+      WIN_ACCEL: auto
+      WIN_MEM: ${WIN10_MEM:-2048}
+      WIN_SMP: ${WIN10_SMP:-2}
+      WIN_VGA: std
+      WIN_NIC: e1000
+      WIN_SOUND: hda
+      WIN_TABLET: "1"
+      WIN_RDP_PORT: "3389"
+      WIN_DISK: ${WIN10_DISK:-win10.qcow2}
+      WIN_CDROM: ${WIN10_CDROM:-win10.iso}
+      WIN_DISK_SIZE: ${WIN10_DISK_SIZE:-40G}
+      WIN_MAC: "52:54:00:12:10:01"
 
   haiku:
     <<: *alt-hosts

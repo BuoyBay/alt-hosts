@@ -41,6 +41,7 @@ COPY guests/macos9/qemu-macos9.sh /usr/local/bin/qemu-macos9
 COPY guests/haiku/qemu-haiku.sh /usr/local/bin/qemu-haiku
 COPY guests/macosx-intel/qemu-macosx-intel.sh /usr/local/bin/qemu-macosx-intel
 COPY guests/minivmac/minivmac-macos.sh /usr/local/bin/minivmac-macos
+COPY guests/windows/qemu-windows.sh /usr/local/bin/qemu-windows
 RUN chmod 0755 \
     /usr/local/bin/entrypoint \
     /usr/local/bin/qemu-macos-ppc \
@@ -50,10 +51,11 @@ RUN chmod 0755 \
     /usr/local/bin/qemu-macosx-intel \
     /usr/local/bin/minivmac-macos \
     /usr/local/bin/minivmac-plus \
-    /usr/local/bin/minivmac-128k
+    /usr/local/bin/minivmac-128k \
+    /usr/local/bin/qemu-windows
 
 WORKDIR /media
-EXPOSE 5900 6080 2222
+EXPOSE 5900 6080 2222 3389
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 CMD ["macos9"]

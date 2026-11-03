@@ -21,6 +21,7 @@ Operator-supplied later:
 - `macosx100.iso` … `macosx103.iso` (Cheetah through Panther)
 - `macosx106.iso` or a 10.6 installer qcow2 (`MACOSX106_INSTALLER`)
 - `macos1.dsk` … `macos5.dsk` (System 1–5)
+- `win95.iso` / `win95.img` … `win10.iso` (Windows 95–10)
 
 Copied from `local/LegacyOSXKVM` by `pull-media.sh`:
 
