@@ -4,7 +4,7 @@ x-alt-hosts: &alt-hosts
   build:
     context: .
     dockerfile: guests/Dockerfile
-  image: buoybay/alt-hosts:0.3.0
+  image: buoybay/alt-hosts:0.4.0
   volumes:
     - ${MEDIA_DIR:-./media}:/media
   stop_grace_period: 20s
@@ -132,6 +132,91 @@ services:
       MACOS_MAC: "08:00:07:10:04:02"
       MACOS_SSH_PORT: "2222"
       MACOS_DISK_SIZE: "10G"
+      DISPLAY_RES: 1024x768x32
+
+  macosx106:
+    <<: *alt-hosts
+    command: ["macosx106"]
+    devices:
+      - /dev/kvm
+    ports:
+      - "127.0.0.1:5908:5900"
+      - "127.0.0.1:6098:6080"
+      - "127.0.0.1:2216:2222"
+    environment:
+      GUEST_NAME: macosx106
+      MACOS_DISK: ${MACOSX106_DISK:-macosx106.qcow2}
+      MACOS_OC: ${MACOSX106_OC:-macosx106-oc.qcow2}
+      MACOS_CDROM: ${MACOSX106_CDROM:-macosx106.iso}
+      MACOS_INSTALLER: ${MACOSX106_INSTALLER:-}
+      MACOS_MEM: ${MACOSX106_MEM:-2048}
+      MACOS_SMP: ${MACOSX106_SMP:-1}
+      MACOS_SSH_PORT: "2222"
+      MACOS_MAC: "08:00:07:10:06:01"
+      MACOS_DISK_SIZE: "16G"
+
+  macosx103:
+    <<: *alt-hosts
+    command: ["macosx103"]
+    ports:
+      - "127.0.0.1:5923:5900"
+      - "127.0.0.1:6123:6080"
+    environment:
+      GUEST_NAME: macosx103
+      MACOS_DISK: ${MACOSX103_DISK:-macosx103.qcow2}
+      MACOS_CDROM: ${MACOSX103_CDROM:-macosx103.iso}
+      MACOS_BOOT: ${MACOSX103_BOOT:-c}
+      MACOS_MEM: ${MACOSX103_MEM:-1024}
+      MACOS_MACHINE: mac99,via=pmu
+      MACOS_MAC: "08:00:07:10:03:01"
+      DISPLAY_RES: 1024x768x32
+
+  macosx102:
+    <<: *alt-hosts
+    command: ["macosx102"]
+    ports:
+      - "127.0.0.1:5922:5900"
+      - "127.0.0.1:6122:6080"
+    environment:
+      GUEST_NAME: macosx102
+      MACOS_DISK: ${MACOSX102_DISK:-macosx102.qcow2}
+      MACOS_CDROM: ${MACOSX102_CDROM:-macosx102.iso}
+      MACOS_BOOT: ${MACOSX102_BOOT:-c}
+      MACOS_MEM: ${MACOSX102_MEM:-1024}
+      MACOS_MACHINE: mac99,via=pmu
+      MACOS_MAC: "08:00:07:10:02:01"
+      DISPLAY_RES: 1024x768x32
+
+  macosx101:
+    <<: *alt-hosts
+    command: ["macosx101"]
+    ports:
+      - "127.0.0.1:5921:5900"
+      - "127.0.0.1:6121:6080"
+    environment:
+      GUEST_NAME: macosx101
+      MACOS_DISK: ${MACOSX101_DISK:-macosx101.qcow2}
+      MACOS_CDROM: ${MACOSX101_CDROM:-macosx101.iso}
+      MACOS_BOOT: ${MACOSX101_BOOT:-c}
+      MACOS_MEM: ${MACOSX101_MEM:-512}
+      MACOS_MACHINE: mac99
+      MACOS_MAC: "08:00:07:10:01:01"
+      DISPLAY_RES: 1024x768x32
+
+  macosx100:
+    <<: *alt-hosts
+    command: ["macosx100"]
+    ports:
+      - "127.0.0.1:5920:5900"
+      - "127.0.0.1:6120:6080"
+    environment:
+      GUEST_NAME: macosx100
+      MACOS_DISK: ${MACOSX100_DISK:-macosx100.qcow2}
+      MACOS_CDROM: ${MACOSX100_CDROM:-macosx100.iso}
+      MACOS_BOOT: ${MACOSX100_BOOT:-c}
+      MACOS_MEM: ${MACOSX100_MEM:-512}
+      MACOS_MACHINE: mac99
+      MACOS_MAC: "08:00:07:10:00:01"
       DISPLAY_RES: 1024x768x32
 
   macos75:

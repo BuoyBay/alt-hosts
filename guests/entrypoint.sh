@@ -31,9 +31,14 @@ case "$guest" in
         /usr/local/bin/qemu-macos9 "$@" &
         qemu_pid=$!
         ;;
-    macos921|macos91|macos904|macosx104|tiger|macosx105|leopard)
+    macos921|macos91|macos904|macosx104|tiger|macosx105|leopard|macosx103|macosx102|macosx101|macosx100)
         export GUEST_NAME="${GUEST_NAME:-$guest}"
         /usr/local/bin/qemu-macos-ppc "$@" &
+        qemu_pid=$!
+        ;;
+    macosx106|snowleopard|osx106)
+        export GUEST_NAME="${GUEST_NAME:-$guest}"
+        /usr/local/bin/qemu-macosx-intel "$@" &
         qemu_pid=$!
         ;;
     macos75|os75|macos76|os76)
@@ -46,7 +51,7 @@ case "$guest" in
         qemu_pid=$!
         ;;
     *)
-        echo "unknown guest: $guest (macos9|macos921|macos91|macos904|macosx105|macosx104|macos76|macos75|haiku)" >&2
+        echo "unknown guest: $guest (macos9|macos921|macos91|macos904|macosx106|macosx105|macosx104|macosx103|macosx102|macosx101|macosx100|macos76|macos75|haiku)" >&2
         exit 2
         ;;
 esac

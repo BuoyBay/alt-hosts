@@ -1,7 +1,7 @@
 #!/bin/sh
-# PowerPC Mac OS 9.x and Mac OS X (Tiger / Leopard) on qemu-system-ppc.
-# 9.1/9.2 and OS X: -M mac99,via=pmu (QemuMac power_mac_g4_*).
-# 9.0.4:            -M mac99 without PMU (QEMU wiki).
+# PowerPC Mac OS 9.x and Mac OS X 10.0–10.5 on qemu-system-ppc.
+# 9.1/9.2 and OS X 10.2–10.5: -M mac99,via=pmu (QemuMac power_mac_g4_*).
+# 9.0.4 and OS X 10.0/10.1:   -M mac99 without PMU.
 set -eu
 
 media="${MEDIA_DIR:-/media}"
@@ -31,12 +31,11 @@ fi
 if [ ! -e "$disk" ]; then
     echo "creating empty $disk ($disk_size qcow2); boot from CD to install" >&2
     qemu-img create -f qcow2 "$disk" "$disk_size" >/dev/null
-    if [ -z "$cdrom" ]; then
-        echo "no $disk_name or $cdrom_name under $media" >&2
-        echo "see docs/media.md" >&2
-        exit 1
+    if [ -n "$cdrom" ]; then
+        boot=d
+    else
+        echo "no installer under $media; Open Firmware until ${cdrom_name:-a CD} is added" >&2
     fi
-    boot=d
 fi
 
 hd_i=1

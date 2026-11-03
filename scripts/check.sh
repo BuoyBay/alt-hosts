@@ -9,11 +9,13 @@ for script in \
     scripts/alt-hosts.sh \
     scripts/pull-media.sh \
     scripts/bootstrap-qemumac.sh \
+    scripts/bootstrap-legacyosxkvm.sh \
     guests/entrypoint.sh \
     guests/macos-ppc/qemu-macos-ppc.sh \
     guests/macos-m68k/qemu-macos-m68k.sh \
     guests/macos9/qemu-macos9.sh \
-    guests/haiku/qemu-haiku.sh
+    guests/haiku/qemu-haiku.sh \
+    guests/macosx-intel/qemu-macosx-intel.sh
 do
     if ! sh -n "$script"; then
         echo "syntax: $script" >&2

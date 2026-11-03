@@ -16,7 +16,7 @@ utm91="$downloads/Mac OS 9.1.utm/Data/1F1EC46C-ADFB-4BE4-A541-4FD295FB1767.qcow2
 utm921="$downloads/Mac OS 9.2.1.utm/Images/disk-0.qcow2"
 
 echo "pulling Mac OS 9.x, Quadra ROM, and Haiku disks from $host into $dest" >&2
-echo "Mac OS X Tiger/Leopard ISOs are not on Depot; copy QemuMac iso/ files if present" >&2
+echo "Mac OS X installer ISOs are not on Depot; copy QemuMac iso/ or operator 10.6 media if present" >&2
 
 rsync -aP --info=progress2 \
     "$host:$os9_src/macos-922-uni.iso" \
@@ -59,6 +59,12 @@ fi
 # Same files under the original archive.org names.
 if [ -f "$qemumac_iso/Mac OS X Leopard Install DVD Version 10.5 (2Z691-6037-A) (Apple, Inc.)(2007).iso" ] && [ ! -f "$dest/macosx105.iso" ]; then
     cp -n "$qemumac_iso/Mac OS X Leopard Install DVD Version 10.5 (2Z691-6037-A) (Apple, Inc.)(2007).iso" "$dest/macosx105.iso"
+fi
+
+# OpenCore EFI disk from royalgraphx/LegacyOSXKVM (not Apple OS). Clone first.
+legacy_oc="${root}/local/LegacyOSXKVM/opencore/opencore-SLeopard.qcow2"
+if [ -f "$legacy_oc" ] && [ ! -f "$dest/macosx106-oc.qcow2" ]; then
+    cp -n "$legacy_oc" "$dest/macosx106-oc.qcow2"
 fi
 
 haiku_disk="$dest/haiku-r1beta6-x86_64.qcow2"

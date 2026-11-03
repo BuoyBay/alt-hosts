@@ -30,10 +30,11 @@ Default Docker filenames under `media/`:
 - `macos904.toast` (empty `macos904.qcow2` is created on first boot)
 - `macos-rom.bin` (Mac OS ROM suitcase kept beside the disks; OpenBIOS is used)
 
-## Mac OS X 10.4 / 10.5 (Apple, PowerPC)
+## Mac OS X 10.0–10.5 (Apple, PowerPC)
 
-QemuMac `power_mac_g4_tiger` and `power_mac_g4_leopard`. Installer CDs are
-not on Depot. QemuMac `iso-downloader.sh` fetches them from the same
+QemuMac `power_mac_g4_tiger` and `power_mac_g4_leopard` cover 10.4 / 10.5.
+10.0–10.3 use the same `qemu-system-ppc` launcher. Installer CDs are not
+on Depot. QemuMac `iso-downloader.sh` fetches Tiger/Leopard from the
 archive.org items listed in `iso/software-database.json`:
 
 | QemuMac key | Archive name | `media/` name | md5 |
@@ -42,12 +43,30 @@ archive.org items listed in `iso/software-database.json`:
 | `macos_x_leopard` | `MacOSXLeopard10.5.iso` | `macosx105.iso` | `39131217782d060d72c9cb7688b2b26d` |
 
 `pull-media.sh` copies those files from `local/QemuMac/iso/` when a clone
-is present. Empty `macosx104.qcow2` / `macosx105.qcow2` are created on
-first boot.
+is present. Empty `macosx104.qcow2` / `macosx105.qcow2` and
+`macosx100.qcow2`–`macosx103.qcow2` are created on first boot.
 
-QemuMac `power_mac_g4_tiger_3d` needs a Radeon QEMU build and is not a
-Docker guest. Intel macOS via `/Volumes/Depot/code/repos/OSX-KVM` is a
-separate OpenCore stack.
+Place 10.0–10.3 CDs as `macosx100.iso` … `macosx103.iso`. QemuMac
+`power_mac_g4_tiger_3d` needs a Radeon QEMU build and is not a Docker
+guest.
+
+## Mac OS X 10.6 Snow Leopard (Apple, Intel)
+
+Retail 10.6 dropped PowerPC. The guest is `qemu-system-x86_64` + OVMF +
+OpenCore (`guests/macosx-intel/qemu-macosx-intel.sh`).
+
+| File | What |
+| --- | --- |
+| `macosx106-oc.qcow2` | OpenCore EFI disk from LegacyOSXKVM `opencore/opencore-SLeopard.qcow2` |
+| `macosx106.qcow2` | empty 16G HDD, created on first boot |
+| `macosx106.iso` | operator 10.6 Install DVD (optional) |
+| `macosx106-vars.fd` | OVMF VARS copy, created on first boot |
+
+`./scripts/bootstrap-legacyosxkvm.sh` clones
+[royalgraphx/LegacyOSXKVM](https://github.com/royalgraphx/LegacyOSXKVM)
+into `local/` (not vendored). `pull-media.sh` copies the OpenCore qcow2.
+Do not auto-fetch Apple 10.6 ISOs or `sl_utm.qcow2`. Depot
+`/Volumes/Depot/code/repos/OSX-KVM` is the 10.13+ OpenCore stack.
 
 ## Mac OS 7.5 / 7.6 (Apple, 68k Quadra 800)
 
