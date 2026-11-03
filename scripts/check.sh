@@ -10,6 +10,8 @@ for script in \
     scripts/pull-media.sh \
     scripts/bootstrap-qemumac.sh \
     guests/entrypoint.sh \
+    guests/macos-ppc/qemu-macos-ppc.sh \
+    guests/macos-m68k/qemu-macos-m68k.sh \
     guests/macos9/qemu-macos9.sh \
     guests/haiku/qemu-haiku.sh
 do

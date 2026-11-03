@@ -8,10 +8,15 @@ dest="${ALT_HOSTS_MEDIA_DIR:-$root/media}"
 mkdir -p "$dest"
 
 os9_src="/Volumes/Depot/downloads/qemu-os9"
+downloads="/Volumes/Depot/downloads"
 haiku_src="/Volumes/Depot/grok/workspace/haiku"
+rom_zip="$downloads/Old_World_Mac_Roms.zip"
+rom_member="1MB ROMs/1993-02 - F1ACAD13 - Quadra, Centris 610,650,800.ROM"
+utm91="$downloads/Mac OS 9.1.utm/Data/1F1EC46C-ADFB-4BE4-A541-4FD295FB1767.qcow2"
+utm921="$downloads/Mac OS 9.2.1.utm/Images/disk-0.qcow2"
 
-echo "pulling Mac OS 9.2.2 and Haiku disks from $host into $dest" >&2
-# The grok qcow2 is an overlay on the anyboot ISO; both files are required.
+echo "pulling Mac OS 9.x, Quadra ROM, and Haiku disks from $host into $dest" >&2
+
 rsync -aP --info=progress2 \
     "$host:$os9_src/macos-922-uni.iso" \
     "$host:$os9_src/macos9.qcow2" \
@@ -19,19 +24,34 @@ rsync -aP --info=progress2 \
     "$host:$haiku_src/haiku-r1beta6-x86_64-anyboot.iso" \
     "$dest/"
 
+rsync -aP --info=progress2 \
+    "$host:$os9_src/Mac OS 9.0.4.toast" \
+    "$dest/macos904.toast"
+rsync -aP --info=progress2 \
+    "$host:$os9_src/Mac OS ROM" \
+    "$dest/macos-rom.bin"
+rsync -aP --info=progress2 \
+    "$host:$utm921" \
+    "$dest/macos921.qcow2"
+rsync -aP --info=progress2 \
+    "$host:$utm91" \
+    "$dest/macos91.qcow2"
+
+if [ ! -f "$dest/800.ROM" ]; then
+    echo "extracting Quadra 800 ROM from Old_World_Mac_Roms.zip" >&2
+    ssh "$host" "unzip -p \"$rom_zip\" \"$rom_member\"" > "$dest/800.ROM"
+fi
+rom_md5=$(md5sum "$dest/800.ROM" | awk '{ print $1 }')
+if [ "$rom_md5" != "69489153dde910a69d5ae6de5dd65323" ]; then
+    echo "800.ROM md5 $rom_md5 does not match QemuMac 69489153dde910a69d5ae6de5dd65323" >&2
+    exit 1
+fi
+
 haiku_disk="$dest/haiku-r1beta6-x86_64.qcow2"
 haiku_iso="$dest/haiku-r1beta6-x86_64-anyboot.iso"
 if [ -f "$haiku_disk" ] && [ -f "$haiku_iso" ]; then
     # Overlay was created at /workspace/haiku/... on the grok VM.
     qemu-img rebase -u -b "haiku-r1beta6-x86_64-anyboot.iso" -F raw "$haiku_disk"
-fi
-
-# Optional extras (9.0.4 toast, NewWorld ROM) stay on Depot unless asked.
-if [ "${ALT_HOSTS_PULL_EXTRAS:-0}" = "1" ]; then
-    rsync -aP --info=progress2 \
-        "$host:$os9_src/Mac OS 9.0.4.toast" \
-        "$host:$os9_src/Mac OS ROM" \
-        "$dest/"
 fi
 
 ls -lh "$dest"

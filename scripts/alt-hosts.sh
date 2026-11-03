@@ -17,7 +17,7 @@ compose() {
 
 usage() {
     echo "usage: $0 check|pull-media|bootstrap-qemumac|up [guest]|down [guest]|status|logs [guest]" >&2
-    echo "guests: macos9 (default) | haiku" >&2
+    echo "guests: macos9 macos921 macos91 macos904 macos76 macos75 haiku" >&2
     exit 2
 }
 
@@ -39,7 +39,14 @@ case "$cmd" in
     up)
         guest="${1:-macos9}"
         compose up --build -d "$guest"
-        echo "noVNC: macos9 http://127.0.0.1:6099/vnc.html  haiku http://127.0.0.1:6111/vnc.html"
+        echo "noVNC:"
+        echo "  macos9   http://127.0.0.1:6099/vnc.html"
+        echo "  macos921 http://127.0.0.1:6092/vnc.html"
+        echo "  macos91  http://127.0.0.1:6091/vnc.html"
+        echo "  macos904 http://127.0.0.1:6094/vnc.html"
+        echo "  macos76  http://127.0.0.1:6096/vnc.html"
+        echo "  macos75  http://127.0.0.1:6095/vnc.html"
+        echo "  haiku    http://127.0.0.1:6111/vnc.html"
         ;;
     down)
         if [ "$#" -gt 0 ]; then

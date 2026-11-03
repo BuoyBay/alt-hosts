@@ -1,18 +1,23 @@
 name: alt-hosts
 
+x-alt-hosts: &alt-hosts
+  build:
+    context: .
+    dockerfile: guests/Dockerfile
+  image: buoybay/alt-hosts:0.2.0
+  volumes:
+    - ${MEDIA_DIR:-./media}:/media
+  stop_grace_period: 20s
+
 services:
   macos9:
-    build:
-      context: .
-      dockerfile: guests/Dockerfile
-    image: buoybay/alt-hosts:0.1.0
+    <<: *alt-hosts
     command: ["macos9"]
     ports:
       - "127.0.0.1:5909:5900"
       - "127.0.0.1:6099:6080"
-    volumes:
-      - ${MEDIA_DIR:-./media}:/media
     environment:
+      GUEST_NAME: macos9
       MACOS9_DISK: ${MACOS9_DISK:-macos9.qcow2}
       MACOS9_CDROM: ${MACOS9_CDROM:-macos-922-uni.iso}
       MACOS9_BOOT: ${MACOS9_BOOT:-c}
@@ -20,13 +25,94 @@ services:
       MACOS9_CPU: ${MACOS9_CPU:-7400_v2.9}
       MACOS9_MACHINE: ${MACOS9_MACHINE:-mac99,via=pmu}
       DISPLAY_RES: ${DISPLAY_RES:-1024x768x32}
-    stop_grace_period: 20s
+
+  macos921:
+    <<: *alt-hosts
+    command: ["macos921"]
+    ports:
+      - "127.0.0.1:5902:5900"
+      - "127.0.0.1:6092:6080"
+    environment:
+      GUEST_NAME: macos921
+      MACOS_DISK: ${MACOS921_DISK:-macos921.qcow2}
+      MACOS_CDROM: ${MACOS921_CDROM:-}
+      MACOS_BOOT: ${MACOS921_BOOT:-c}
+      MACOS_MEM: ${MACOS921_MEM:-512}
+      MACOS_CPU: ${MACOS921_CPU:-7400_v2.9}
+      MACOS_MACHINE: ${MACOS921_MACHINE:-mac99,via=pmu}
+      MACOS_MAC: "08:00:07:09:21:01"
+      DISPLAY_RES: 1024x768x32
+
+  macos91:
+    <<: *alt-hosts
+    command: ["macos91"]
+    ports:
+      - "127.0.0.1:5901:5900"
+      - "127.0.0.1:6091:6080"
+    environment:
+      GUEST_NAME: macos91
+      MACOS_DISK: ${MACOS91_DISK:-macos91.qcow2}
+      MACOS_CDROM: ${MACOS91_CDROM:-}
+      MACOS_BOOT: ${MACOS91_BOOT:-c}
+      MACOS_MEM: ${MACOS91_MEM:-512}
+      MACOS_CPU: ${MACOS91_CPU:-7400_v2.9}
+      MACOS_MACHINE: ${MACOS91_MACHINE:-mac99,via=pmu}
+      MACOS_MAC: "08:00:07:09:01:01"
+      DISPLAY_RES: 1024x768x32
+
+  macos904:
+    <<: *alt-hosts
+    command: ["macos904"]
+    ports:
+      - "127.0.0.1:5904:5900"
+      - "127.0.0.1:6094:6080"
+    environment:
+      GUEST_NAME: macos904
+      MACOS_DISK: ${MACOS904_DISK:-macos904.qcow2}
+      MACOS_CDROM: ${MACOS904_CDROM:-macos904.toast}
+      MACOS_BOOT: ${MACOS904_BOOT:-d}
+      MACOS_MEM: ${MACOS904_MEM:-256}
+      MACOS_CPU: ${MACOS904_CPU:-7400_v2.9}
+      MACOS_MACHINE: ${MACOS904_MACHINE:-mac99}
+      MACOS_MAC: "08:00:07:09:04:01"
+      DISPLAY_RES: 1024x768x32
+
+  macos76:
+    <<: *alt-hosts
+    command: ["macos76"]
+    ports:
+      - "127.0.0.1:5906:5900"
+      - "127.0.0.1:6096:6080"
+    environment:
+      GUEST_NAME: macos76
+      MACOS_DISK: ${MACOS76_DISK:-macos76.qcow2}
+      MACOS_CDROM: ${MACOS76_CDROM:-macos76.iso}
+      MACOS_ROM: ${MACOS76_ROM:-800.ROM}
+      MACOS_PRAM: macos76.pram
+      MACOS_BOOT: ${MACOS76_BOOT:-c}
+      MACOS_MEM: ${MACOS76_MEM:-128}
+      MACOS_MAC: "08:00:07:12:34:56"
+      DISPLAY_RES: 1152x870x8
+
+  macos75:
+    <<: *alt-hosts
+    command: ["macos75"]
+    ports:
+      - "127.0.0.1:5905:5900"
+      - "127.0.0.1:6095:6080"
+    environment:
+      GUEST_NAME: macos75
+      MACOS_DISK: ${MACOS75_DISK:-macos75.qcow2}
+      MACOS_CDROM: ${MACOS75_CDROM:-macos75.iso}
+      MACOS_ROM: ${MACOS75_ROM:-800.ROM}
+      MACOS_PRAM: macos75.pram
+      MACOS_BOOT: ${MACOS75_BOOT:-c}
+      MACOS_MEM: ${MACOS75_MEM:-128}
+      MACOS_MAC: "08:00:07:53:07:a1"
+      DISPLAY_RES: 1152x870x8
 
   haiku:
-    build:
-      context: .
-      dockerfile: guests/Dockerfile
-    image: buoybay/alt-hosts:0.1.0
+    <<: *alt-hosts
     command: ["haiku"]
     devices:
       - /dev/kvm
@@ -34,12 +120,9 @@ services:
       - "127.0.0.1:5911:5900"
       - "127.0.0.1:6111:6080"
       - "127.0.0.1:2211:2222"
-    volumes:
-      - ${MEDIA_DIR:-./media}:/media
     environment:
       HAIKU_DISK: ${HAIKU_DISK:-haiku-r1beta6-x86_64.qcow2}
       HAIKU_CDROM: ${HAIKU_CDROM:-}
       HAIKU_MEM: ${HAIKU_MEM:-2048}
       HAIKU_SMP: ${HAIKU_SMP:-2}
       HAIKU_SSH_PORT: "2222"
-    stop_grace_period: 20s

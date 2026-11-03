@@ -31,12 +31,22 @@ case "$guest" in
         /usr/local/bin/qemu-macos9 "$@" &
         qemu_pid=$!
         ;;
+    macos921|macos91|macos904)
+        export GUEST_NAME="${GUEST_NAME:-$guest}"
+        /usr/local/bin/qemu-macos-ppc "$@" &
+        qemu_pid=$!
+        ;;
+    macos75|os75|macos76|os76)
+        export GUEST_NAME="${GUEST_NAME:-$guest}"
+        /usr/local/bin/qemu-macos-m68k "$@" &
+        qemu_pid=$!
+        ;;
     haiku)
         /usr/local/bin/qemu-haiku "$@" &
         qemu_pid=$!
         ;;
     *)
-        echo "unknown guest: $guest (macos9|haiku)" >&2
+        echo "unknown guest: $guest (macos9|macos921|macos91|macos904|macos76|macos75|haiku)" >&2
         exit 2
         ;;
 esac

@@ -1,22 +1,27 @@
-# Mac OS 7.5–8.x (next)
+# Mac OS 7.5.3 guest
 
-68k Quadra 800 guests come after Mac OS 9.x is booting from Docker.
+68k Quadra 800 on `qemu-system-m68k` `-M q800 -cpu m68040`. Shared launcher:
+`guests/macos-m68k/qemu-macos-m68k.sh`. Sibling service `macos76` is 7.6.1.
 
-QemuMac already ships:
+## Media
 
-- `vms/68k_quadra_800_os753` — Mac OS 7.5.3
-- `vms/68k_quadra_800` — Mac OS 7.6.1
+| File | Role |
+| --- | --- |
+| `800.ROM` | Quadra 800 ROM from `Old_World_Mac_Roms.zip` |
+| `macos75.qcow2` | empty 2G disk until install |
+| `macos75.iso` | Apple Legacy Recovery or 7.5.3 CD (operator-supplied) |
 
-Those need `qemu-system-m68k` (`-M q800`, CPU `m68040`) and a Quadra 800
-ROM (`800.ROM`). The ROM is Apple copyrighted; keep it in `media/` like
-the OS 9 disks. QEMU 8.2+ is required.
+`scripts/pull-media.sh` extracts the ROM. Depot does not have a 7.5 installer;
+the guest exits until `macos75.iso` is present.
 
-On this Debian host, install `qemu-system-misc` when wiring the guest.
-The Docker image currently ships `qemu-system-ppc` and `qemu-system-x86`
-only.
+## Access
 
-Operator media already on `m4-casa` that may help later:
+- noVNC: http://127.0.0.1:6095/vnc.html
+- VNC: `127.0.0.1:5905`
 
-- `/Volumes/Depot/downloads/Old_World_Mac_Roms.zip`
-- `/Volumes/Depot/downloads/SheepShaver_Roms.zip`
-- `/Volumes/Depot/downloads/qemu-os9/Mac OS ROM` (NewWorld; not the 68k ROM)
+`macos76` uses 6096 / 5906 and `macos76.iso`.
+
+## Native launcher
+
+On macOS, [QemuMac](https://github.com/matthewdeaves/QemuMac)
+`vms/68k_quadra_800_os753` (7.5.3) and `vms/68k_quadra_800` (7.6.1).
