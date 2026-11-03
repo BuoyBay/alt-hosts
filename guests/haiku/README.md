@@ -11,11 +11,13 @@ the device is readable and falls back to TCG otherwise.
 
 | File | Role |
 | --- | --- |
-| `haiku-r1beta6-x86_64.qcow2` | Installed disk (default) |
-| `haiku-r1beta6-x86_64-anyboot.iso` | Official anyboot ISO (optional CD) |
+| `haiku-r1beta6-x86_64.qcow2` | Overlay on the anyboot ISO (required) |
+| `haiku-r1beta6-x86_64-anyboot.iso` | Official anyboot ISO (backing file) |
 
-`scripts/pull-media.sh` copies the qcow2. The 1.4 GiB anyboot ISO is left
-on Depot until a reinstall is needed.
+The grok qcow2 is not a standalone disk; QEMU needs the ISO beside it.
+`scripts/pull-media.sh` copies both and rebases the overlay onto a relative
+path. `qemu-haiku.sh` does the same rebase if the original
+`/workspace/haiku/...` backing path is missing.
 
 Official images: https://www.haiku-os.org/get-haiku/ and
 https://download.haiku-os.org/

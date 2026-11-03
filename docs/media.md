@@ -40,7 +40,10 @@ Grok-bot copies on `m4-casa`:
 | `/Volumes/Depot/grok/workspace/haiku/haiku-r1beta6-x86_64-anyboot.iso` | Official anyboot ISO |
 | `/Volumes/Depot/grok/workspace/haiku/start-haiku.sh` | Original TCG launcher |
 
-Default Docker filename: `haiku-r1beta6-x86_64.qcow2`.
+Default Docker files: `haiku-r1beta6-x86_64.qcow2` plus its backing
+`haiku-r1beta6-x86_64-anyboot.iso`. The qcow2 is a 196 MiB overlay created
+at `/workspace/haiku/` on the grok VM; `pull-media.sh` rebases it onto the
+ISO in `media/`.
 
 ## Pull
 
