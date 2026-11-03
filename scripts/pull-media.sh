@@ -16,6 +16,7 @@ utm91="$downloads/Mac OS 9.1.utm/Data/1F1EC46C-ADFB-4BE4-A541-4FD295FB1767.qcow2
 utm921="$downloads/Mac OS 9.2.1.utm/Images/disk-0.qcow2"
 
 echo "pulling Mac OS 9.x, Quadra ROM, and Haiku disks from $host into $dest" >&2
+echo "Mac OS X Tiger/Leopard ISOs are not on Depot; copy QemuMac iso/ files if present" >&2
 
 rsync -aP --info=progress2 \
     "$host:$os9_src/macos-922-uni.iso" \
@@ -45,6 +46,19 @@ rom_md5=$(md5sum "$dest/800.ROM" | awk '{ print $1 }')
 if [ "$rom_md5" != "69489153dde910a69d5ae6de5dd65323" ]; then
     echo "800.ROM md5 $rom_md5 does not match QemuMac 69489153dde910a69d5ae6de5dd65323" >&2
     exit 1
+fi
+
+# QemuMac iso-downloader writes these names. Copy if a clone is present.
+qemumac_iso="${root}/local/QemuMac/iso"
+if [ -f "$qemumac_iso/MacOSX.4.iso" ] && [ ! -f "$dest/macosx104.iso" ]; then
+    cp -n "$qemumac_iso/MacOSX.4.iso" "$dest/macosx104.iso"
+fi
+if [ -f "$qemumac_iso/MacOSXLeopard10.5.iso" ] && [ ! -f "$dest/macosx105.iso" ]; then
+    cp -n "$qemumac_iso/MacOSXLeopard10.5.iso" "$dest/macosx105.iso"
+fi
+# Same files under the original archive.org names.
+if [ -f "$qemumac_iso/Mac OS X Leopard Install DVD Version 10.5 (2Z691-6037-A) (Apple, Inc.)(2007).iso" ] && [ ! -f "$dest/macosx105.iso" ]; then
+    cp -n "$qemumac_iso/Mac OS X Leopard Install DVD Version 10.5 (2Z691-6037-A) (Apple, Inc.)(2007).iso" "$dest/macosx105.iso"
 fi
 
 haiku_disk="$dest/haiku-r1beta6-x86_64.qcow2"

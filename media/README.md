@@ -15,3 +15,4 @@ Expected names after `./scripts/pull-media.sh`:
 Operator-supplied later:
 
 - `macos75.iso`, `macos76.iso` (Apple Legacy Recovery / 7.5 / 7.6 CDs)
+- `macosx104.iso`, `macosx105.iso` (QemuMac `macos_x_tiger` / `macos_x_leopard`)

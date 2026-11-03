@@ -1,7 +1,7 @@
 #!/bin/sh
-# PowerPC Mac OS 9.x on qemu-system-ppc.
-# 9.1/9.2: -M mac99,via=pmu (QemuMac power_mac_g4_os9, UTM bundles).
-# 9.0.4:   -M mac99 without PMU (QEMU wiki).
+# PowerPC Mac OS 9.x and Mac OS X (Tiger / Leopard) on qemu-system-ppc.
+# 9.1/9.2 and OS X: -M mac99,via=pmu (QemuMac power_mac_g4_*).
+# 9.0.4:            -M mac99 without PMU (QEMU wiki).
 set -eu
 
 media="${MEDIA_DIR:-/media}"
@@ -16,6 +16,7 @@ machine="${MACOS_MACHINE:-mac99,via=pmu}"
 display_res="${DISPLAY_RES:-1024x768x32}"
 mac_addr="${MACOS_MAC:-08:00:07:09:22:01}"
 disk_size="${MACOS_DISK_SIZE:-10G}"
+ssh_port="${MACOS_SSH_PORT:-}"
 
 disk="$media/$disk_name"
 cdrom=""
@@ -59,11 +60,16 @@ if [ -n "$bios" ]; then
     set -- "$@" -bios "$bios"
 fi
 
+netdev="user,id=net0,hostfwd=tcp::548-:548"
+if [ -n "$ssh_port" ]; then
+    netdev="${netdev},hostfwd=tcp::${ssh_port}-:22"
+fi
+
 set -- "$@" \
     -prom-env "auto-boot?=true" \
     -prom-env "boot-args=-v" \
     -prom-env "vga-ndrv?=true" \
-    -netdev "user,id=net0,hostfwd=tcp::548-:548" \
+    -netdev "$netdev" \
     -device "sungem,netdev=net0,mac=$mac_addr" \
     -device "pci-ohci,id=ohci" \
     -device "usb-mouse,bus=ohci.0" \
@@ -77,5 +83,5 @@ if [ -n "$cdrom" ]; then
         -device "ide-cd,bus=ide.0,unit=1,drive=cd0,bootindex=$cd_i"
 fi
 
-echo "$name QEMU disk=$disk cdrom=${cdrom:-none} bios=${bios:-openbios} machine=$machine boot=$boot vnc=:0" >&2
+echo "$name QEMU disk=$disk cdrom=${cdrom:-none} bios=${bios:-openbios} machine=$machine boot=$boot ssh=${ssh_port:-none} vnc=:0" >&2
 exec "$@"

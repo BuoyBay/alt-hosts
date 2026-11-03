@@ -30,6 +30,25 @@ Default Docker filenames under `media/`:
 - `macos904.toast` (empty `macos904.qcow2` is created on first boot)
 - `macos-rom.bin` (Mac OS ROM suitcase kept beside the disks; OpenBIOS is used)
 
+## Mac OS X 10.4 / 10.5 (Apple, PowerPC)
+
+QemuMac `power_mac_g4_tiger` and `power_mac_g4_leopard`. Installer CDs are
+not on Depot. QemuMac `iso-downloader.sh` fetches them from the same
+archive.org items listed in `iso/software-database.json`:
+
+| QemuMac key | Archive name | `media/` name | md5 |
+| --- | --- | --- | --- |
+| `macos_x_tiger` | `MacOSX.4.iso` | `macosx104.iso` | `4764d50fecb9f9370b626fc146f09954` |
+| `macos_x_leopard` | `MacOSXLeopard10.5.iso` | `macosx105.iso` | `39131217782d060d72c9cb7688b2b26d` |
+
+`pull-media.sh` copies those files from `local/QemuMac/iso/` when a clone
+is present. Empty `macosx104.qcow2` / `macosx105.qcow2` are created on
+first boot.
+
+QemuMac `power_mac_g4_tiger_3d` needs a Radeon QEMU build and is not a
+Docker guest. Intel macOS via `/Volumes/Depot/code/repos/OSX-KVM` is a
+separate OpenCore stack.
+
 ## Mac OS 7.5 / 7.6 (Apple, 68k Quadra 800)
 
 | Path | What |

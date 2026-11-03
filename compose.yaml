@@ -4,7 +4,7 @@ x-alt-hosts: &alt-hosts
   build:
     context: .
     dockerfile: guests/Dockerfile
-  image: buoybay/alt-hosts:0.2.0
+  image: buoybay/alt-hosts:0.3.0
   volumes:
     - ${MEDIA_DIR:-./media}:/media
   stop_grace_period: 20s
@@ -93,6 +93,46 @@ services:
       MACOS_MEM: ${MACOS76_MEM:-128}
       MACOS_MAC: "08:00:07:12:34:56"
       DISPLAY_RES: 1152x870x8
+
+  macosx105:
+    <<: *alt-hosts
+    command: ["macosx105"]
+    ports:
+      - "127.0.0.1:5907:5900"
+      - "127.0.0.1:6097:6080"
+      - "127.0.0.1:2215:2222"
+    environment:
+      GUEST_NAME: macosx105
+      MACOS_DISK: ${MACOSX105_DISK:-macosx105.qcow2}
+      MACOS_CDROM: ${MACOSX105_CDROM:-macosx105.iso}
+      MACOS_BOOT: ${MACOSX105_BOOT:-c}
+      MACOS_MEM: ${MACOSX105_MEM:-2048}
+      MACOS_CPU: ${MACOSX105_CPU:-7400_v2.9}
+      MACOS_MACHINE: ${MACOSX105_MACHINE:-mac99,via=pmu}
+      MACOS_MAC: "08:00:07:10:05:03"
+      MACOS_SSH_PORT: "2222"
+      MACOS_DISK_SIZE: "10G"
+      DISPLAY_RES: 1024x768x32
+
+  macosx104:
+    <<: *alt-hosts
+    command: ["macosx104"]
+    ports:
+      - "127.0.0.1:5903:5900"
+      - "127.0.0.1:6093:6080"
+      - "127.0.0.1:2214:2222"
+    environment:
+      GUEST_NAME: macosx104
+      MACOS_DISK: ${MACOSX104_DISK:-macosx104.qcow2}
+      MACOS_CDROM: ${MACOSX104_CDROM:-macosx104.iso}
+      MACOS_BOOT: ${MACOSX104_BOOT:-c}
+      MACOS_MEM: ${MACOSX104_MEM:-2048}
+      MACOS_CPU: ${MACOSX104_CPU:-7400_v2.9}
+      MACOS_MACHINE: ${MACOSX104_MACHINE:-mac99,via=pmu}
+      MACOS_MAC: "08:00:07:10:04:02"
+      MACOS_SSH_PORT: "2222"
+      MACOS_DISK_SIZE: "10G"
+      DISPLAY_RES: 1024x768x32
 
   macos75:
     <<: *alt-hosts
