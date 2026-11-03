@@ -19,12 +19,15 @@ if [ ! -e "$disk" ]; then
 fi
 
 # Grok overlay points at /workspace/haiku/<anyboot.iso>. Retarget to /media.
-backing="$(qemu-img info "$disk" | awk -F': ' '/^backing file:/{print $2}' | tr -d '\r')"
-if [ -n "$backing" ] && [ ! -e "$backing" ]; then
+# qemu-img may print "backing file: name (actual path: ...)".
+backing="$(qemu-img info "$disk" | sed -n 's/^backing file: \([^ ]*\).*/\1/p')"
+if [ -n "$backing" ]; then
     iso_name="$(basename "$backing")"
-    if [ -e "$media/$iso_name" ]; then
-        echo "rebasing $disk onto $media/$iso_name" >&2
-        qemu-img rebase -u -b "$iso_name" -F raw "$disk"
+    if [ -e "$backing" ] || [ -e "$media/$iso_name" ] || [ -e "$(dirname "$disk")/$iso_name" ]; then
+        if [ ! -e "$backing" ]; then
+            echo "rebasing $disk onto $iso_name" >&2
+            qemu-img rebase -u -b "$iso_name" -F raw "$disk"
+        fi
     else
         echo "qcow2 backing $backing is missing; put $iso_name in $media" >&2
         exit 1
