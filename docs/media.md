@@ -68,6 +68,24 @@ into `local/` (not vendored). `pull-media.sh` copies the OpenCore qcow2.
 Do not auto-fetch Apple 10.6 ISOs or `sl_utm.qcow2`. Depot
 `/Volumes/Depot/code/repos/OSX-KVM` is the 10.13+ OpenCore stack.
 
+## Macintosh System 1–6 (Apple, Mini vMac)
+
+Stock QEMU has no Macintosh 128K or Plus. Mini vMac covers System 1.0
+(128K) and System 1.1–6.0.8 (Plus).
+
+| File | What |
+| --- | --- |
+| `vMac.ROM` | Plus v3 from `Old_World_Mac_Roms.zip` |
+| `Mac128K.ROM` | 128K from the same zip |
+| `macos6.dsk` | Apple System 6.0.8 System Startup (freeware) |
+| `macos6-additions.dsk` | System Additions |
+| `macos1.dsk` … `macos5.dsk` | operator System 1–5 disks |
+
+`pull-media.sh` extracts the ROMs and downloads the two Apple
+`SSW_6.0.8-1.4MB_Disk*.sea.bin` files, then unpacks them with ua608d.
+Apple’s 6.0.8 license is freeware; the unpacked disks stay under
+gitignored `media/` and are not redistributed from this repo.
+
 ## Mac OS 7.5 / 7.6 (Apple, 68k Quadra 800)
 
 | Path | What |

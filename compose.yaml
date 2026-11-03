@@ -4,7 +4,7 @@ x-alt-hosts: &alt-hosts
   build:
     context: .
     dockerfile: guests/Dockerfile
-  image: buoybay/alt-hosts:0.4.0
+  image: buoybay/alt-hosts:0.5.0
   volumes:
     - ${MEDIA_DIR:-./media}:/media
   stop_grace_period: 20s
@@ -235,6 +235,79 @@ services:
       MACOS_MEM: ${MACOS75_MEM:-128}
       MACOS_MAC: "08:00:07:53:07:a1"
       DISPLAY_RES: 1152x870x8
+
+  macos6:
+    <<: *alt-hosts
+    command: ["macos6"]
+    ports:
+      - "127.0.0.1:5916:5900"
+      - "127.0.0.1:6116:6080"
+    environment:
+      GUEST_NAME: macos6
+      MACOS_MVM_MODEL: plus
+      MACOS_ROM: ${MACOS6_ROM:-vMac.ROM}
+      MACOS_DISK: ${MACOS6_DISK:-macos6.dsk}
+      MACOS_DISK2: ${MACOS6_DISK2:-macos6-additions.dsk}
+
+  macos5:
+    <<: *alt-hosts
+    command: ["macos5"]
+    ports:
+      - "127.0.0.1:5915:5900"
+      - "127.0.0.1:6115:6080"
+    environment:
+      GUEST_NAME: macos5
+      MACOS_MVM_MODEL: plus
+      MACOS_ROM: ${MACOS5_ROM:-vMac.ROM}
+      MACOS_DISK: ${MACOS5_DISK:-macos5.dsk}
+
+  macos4:
+    <<: *alt-hosts
+    command: ["macos4"]
+    ports:
+      - "127.0.0.1:5914:5900"
+      - "127.0.0.1:6114:6080"
+    environment:
+      GUEST_NAME: macos4
+      MACOS_MVM_MODEL: plus
+      MACOS_ROM: ${MACOS4_ROM:-vMac.ROM}
+      MACOS_DISK: ${MACOS4_DISK:-macos4.dsk}
+
+  macos3:
+    <<: *alt-hosts
+    command: ["macos3"]
+    ports:
+      - "127.0.0.1:5913:5900"
+      - "127.0.0.1:6113:6080"
+    environment:
+      GUEST_NAME: macos3
+      MACOS_MVM_MODEL: plus
+      MACOS_ROM: ${MACOS3_ROM:-vMac.ROM}
+      MACOS_DISK: ${MACOS3_DISK:-macos3.dsk}
+
+  macos2:
+    <<: *alt-hosts
+    command: ["macos2"]
+    ports:
+      - "127.0.0.1:5912:5900"
+      - "127.0.0.1:6112:6080"
+    environment:
+      GUEST_NAME: macos2
+      MACOS_MVM_MODEL: plus
+      MACOS_ROM: ${MACOS2_ROM:-vMac.ROM}
+      MACOS_DISK: ${MACOS2_DISK:-macos2.dsk}
+
+  macos1:
+    <<: *alt-hosts
+    command: ["macos1"]
+    ports:
+      - "127.0.0.1:5910:5900"
+      - "127.0.0.1:6110:6080"
+    environment:
+      GUEST_NAME: macos1
+      MACOS_MVM_MODEL: 128k
+      MACOS_ROM: ${MACOS1_ROM:-Mac128K.ROM}
+      MACOS_DISK: ${MACOS1_DISK:-macos1.dsk}
 
   haiku:
     <<: *alt-hosts

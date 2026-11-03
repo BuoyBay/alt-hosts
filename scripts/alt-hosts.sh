@@ -17,7 +17,7 @@ compose() {
 
 usage() {
     echo "usage: $0 check|pull-media|bootstrap-qemumac|bootstrap-legacyosxkvm|up [guest]|down [guest]|status|logs [guest]" >&2
-    echo "guests: macos9 macos921 macos91 macos904 macosx106 macosx105 macosx104 macosx103 macosx102 macosx101 macosx100 macos76 macos75 haiku" >&2
+    echo "guests: macos9 macos921 macos91 macos904 macosx106 macosx105 macosx104 macosx103 macosx102 macosx101 macosx100 macos76 macos75 macos6 macos5 macos4 macos3 macos2 macos1 haiku" >&2
     exit 2
 }
 
@@ -56,6 +56,12 @@ case "$cmd" in
         echo "  macosx100 http://127.0.0.1:6120/vnc.html"
         echo "  macos76   http://127.0.0.1:6096/vnc.html"
         echo "  macos75  http://127.0.0.1:6095/vnc.html"
+        echo "  macos6    http://127.0.0.1:6116/vnc.html"
+        echo "  macos5    http://127.0.0.1:6115/vnc.html"
+        echo "  macos4    http://127.0.0.1:6114/vnc.html"
+        echo "  macos3    http://127.0.0.1:6113/vnc.html"
+        echo "  macos2    http://127.0.0.1:6112/vnc.html"
+        echo "  macos1    http://127.0.0.1:6110/vnc.html"
         echo "  haiku    http://127.0.0.1:6111/vnc.html"
         ;;
     down)

@@ -26,6 +26,8 @@ buoy-llms.txt
 *.ROM
 *.pram
 *.fd
+*.dsk
+*.sea.bin
 *.utm
 *.utm.zip
 

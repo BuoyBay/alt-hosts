@@ -28,7 +28,8 @@ Installer ISOs are not on Depot. Copy Apple Legacy Recovery (or a 7.5.3 /
 launcher creates an empty 2G qcow2 and exits with a message to add the CD.
 
 Mac OS 8.1 is the last 68k release and uses this same launcher. 8.0–8.6 are
-not supported on `qemu-system-ppc`.
+not supported on `qemu-system-ppc`. System 1–6 use Mini vMac; see
+[macos-system.md](macos-system.md).
 
 ## Native launcher
 

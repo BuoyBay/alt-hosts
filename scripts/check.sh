@@ -15,7 +15,9 @@ for script in \
     guests/macos-m68k/qemu-macos-m68k.sh \
     guests/macos9/qemu-macos9.sh \
     guests/haiku/qemu-haiku.sh \
-    guests/macosx-intel/qemu-macosx-intel.sh
+    guests/macosx-intel/qemu-macosx-intel.sh \
+    guests/minivmac/minivmac-macos.sh \
+    guests/minivmac/build.sh
 do
     if ! sh -n "$script"; then
         echo "syntax: $script" >&2
