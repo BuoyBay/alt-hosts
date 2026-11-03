@@ -39,7 +39,7 @@ case "$cmd" in
     up)
         guest="${1:-macos9}"
         compose up --build -d "$guest"
-        echo "noVNC: macos9 http://127.0.0.1:6081/vnc.html  haiku http://127.0.0.1:6080/vnc.html"
+        echo "noVNC: macos9 http://127.0.0.1:6099/vnc.html  haiku http://127.0.0.1:6011/vnc.html"
         ;;
     down)
         if [ "$#" -gt 0 ]; then

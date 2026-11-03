@@ -22,9 +22,9 @@ https://download.haiku-os.org/
 
 ## Access
 
-- noVNC: http://127.0.0.1:6080/vnc.html
-- VNC: `127.0.0.1:5900`
-- SSH forward `2222` is published for a later sshd setup on the guest
+- noVNC: http://127.0.0.1:6011/vnc.html
+- VNC: `127.0.0.1:5911`
+- SSH forward `2211` is published for a later sshd setup on the guest
   (`user` is Haiku's default account)
 
 A maintained third-party image, `hectorm/qemu-haiku`, is an alternative

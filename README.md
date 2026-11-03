@@ -8,8 +8,8 @@ operating systems. The first guests are **Mac OS 9.2.2** (PowerPC) and
 
 | Guest | QEMU | Default media | UI |
 | --- | --- | --- | --- |
-| `macos9` | `qemu-system-ppc` `-M mac99,via=pmu` | `macos9.qcow2` + `macos-922-uni.iso` | VNC `5901`, noVNC `6081` |
-| `haiku` | `qemu-system-x86_64` | `haiku-r1beta6-x86_64.qcow2` | VNC `5900`, noVNC `6080` |
+| `macos9` | `qemu-system-ppc` `-M mac99,via=pmu` | `macos9.qcow2` + `macos-922-uni.iso` | VNC `5909`, noVNC `6099` |
+| `haiku` | `qemu-system-x86_64` | `haiku-r1beta6-x86_64.qcow2` | VNC `5911`, noVNC `6011` |
 | `macos75` | `qemu-system-m68k` `-M q800` | not wired yet | see [guests/macos75](guests/macos75/README.md) |
 
 Classic Mac flags follow [QemuMac](https://github.com/matthewdeaves/QemuMac)
@@ -49,10 +49,11 @@ That rsyncs the 9.2.2 disk/ISO and the Haiku qcow2 into `media/`. See
 
 noVNC:
 
-- Mac OS 9: http://127.0.0.1:6081/vnc.html
-- Haiku: http://127.0.0.1:6080/vnc.html
+- Mac OS 9: http://127.0.0.1:6099/vnc.html
+- Haiku: http://127.0.0.1:6011/vnc.html
 
-Raw VNC is on `127.0.0.1:5901` (OS 9) and `127.0.0.1:5900` (Haiku).
+Raw VNC is on `127.0.0.1:5909` (OS 9) and `127.0.0.1:5911` (Haiku). Host ports
+avoid the 6081/2222 range already used by other stacks on this workstation.
 
 On macOS, QemuMac remains the native launcher (`local/QemuMac` after
 `./scripts/bootstrap-qemumac.sh`). Docker on this Debian workstation uses

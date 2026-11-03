@@ -31,6 +31,11 @@ CD, shut down, then boot with `MACOS9_BOOT=c`.
 9.0.4 on QEMU wants `-M mac99` without `via=pmu` and a NewWorld ROM 5.2.1+.
 Keep that for a later `macos904` service.
 
+## Access
+
+- noVNC: http://127.0.0.1:6099/vnc.html
+- VNC: `127.0.0.1:5909`
+
 ## Native launcher
 
 On macOS, [QemuMac](https://github.com/matthewdeaves/QemuMac) `power_mac_g4_os9`
